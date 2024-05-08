@@ -13,10 +13,15 @@ int main(int argc, char *argv[])
     QObject::connect(&monitor, &FileMonitor::NotExist, &display, &OutputDisplay::displayNonExistingFile);
     QObject::connect(&monitor, &FileMonitor::FirstOut, &display, &OutputDisplay::FirstDisplay);
    //добавляем файлы под наблюдение
-    monitor.AddFile("C:\\Users\\Aktan\\Desktop\\Новая папка\\A.txt");
+    monitor.AddFile("C:\\Users\\Aktan\\Desktop\\ASD\\A.txt");
+    monitor.AddFile("C:\\Users\\Aktan\\Desktop\\ASD\\B.txt");
+    monitor.AddFile("C:\\Users\\Aktan\\Desktop\\ASD\\C.txt");
+
+    monitor.DelFile("C:\\Users\\Aktan\\Desktop\\ASD\\B.txt");//
 
     QTimer* timer = new QTimer(&monitor);//добавление таймера и связи м/д сигналом и слотом
-    QObject::connect(timer, SIGNAL(timeout()), &monitor, SLOT(update()));
+    QObject::connect(timer, &QTimer::timeout, &monitor, &FileMonitor::update);
     timer->start(100);
+
     return a.exec();
 }

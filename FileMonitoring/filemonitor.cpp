@@ -1,4 +1,7 @@
 #include "filemonitor.h"
+#include <QDebug>
+#include <iostream>
+using namespace std;
 
 bool FileMonitor::AddFile(QString path)
 {
@@ -18,6 +21,7 @@ bool FileMonitor::DelFile(QString path)//удаление файла
     if(objects.contains(temp))
     {
         objects.removeOne(temp);
+        qDebug() << "Deleted file path: " << path;
         return true;
     }
     return false;

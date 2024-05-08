@@ -58,13 +58,21 @@ bool FileStatus::operator==(const FileStatus& other) const
 {
     return other.FilePath == FilePath && other.Size == Size && other.IsExisting == IsExisting;
 }
+
+// Проверка на самоприсваивание - либо на опратор =
 FileStatus& FileStatus::operator =(const FileStatus& other)
 {
+    if (this == &other)
+    {
+        return *this;
+    }
+
     FilePath = other.FilePath;
     IsExisting = other.IsExisting;
     Size = other.Size;
     return *this;
 }
+
 
 FileStatus::FileStatus(const FileStatus& other)
 {

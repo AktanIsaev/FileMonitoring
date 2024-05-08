@@ -5,7 +5,6 @@
 #include <QObject>
 #include <QList>
 
-
 class FileMonitor : public QObject
 {
 private:
@@ -14,8 +13,8 @@ private:
 
     FileMonitor(){}
     ~FileMonitor(){}
-    FileMonitor(FileMonitor const &);
-    FileMonitor& operator=(FileMonitor const&);
+    // FileMonitor(FileMonitor const &);
+    // FileMonitor& operator=(FileMonitor const&);
 public:
     static FileMonitor& Instance()
     {

@@ -1,50 +1,48 @@
 #include "filemonitor.h"
 #include <QDebug>
-#include <iostream>
-using namespace std;
 
-bool FileMonitor::AddFile(QString path)
+bool FileMonitor::AddFile(QString path) // добавление файла в монитор
 {
-    FileStatus temp(path); //временный файл для проверки на наличие файла в списке
-    if(objects.contains(temp))
+    FileStatus temp(path); // временный файл для проверки
+    if(objects.contains(temp)) // если temp содержится в контейнере
     {
         return false;
     }
-    objects.push_back(temp);
-    emit FirstOut(temp.GetFilePath(), temp.GetSize(), temp.GetIsExisting());
+    objects.push_back(temp); // добавляем в конец контейнера
+    emit FirstOut(temp.GetFilePath(), temp.GetSize(), temp.GetIsExisting()); // генерируем сигнал с инфоц
     return true;
 }
 
-bool FileMonitor::DelFile(QString path)//удаление файла
+bool FileMonitor::DelFile(QString path) // удаление файла из монитора
 {
-    FileStatus temp(path);
-    if(objects.contains(temp))
+    FileStatus temp(path); // временный файл для проверки
+    if(objects.contains(temp))// если temp содержится в контейнере
     {
-        objects.removeOne(temp);
-        qDebug() << "Deleted file path: " << path;
+        objects.removeOne(temp); // удаляем с контейнера
+        qDebug() << "Deleted file path: " << path; // сообщение об удалении из монитора
         return true;
     }
     return false;
 }
 
-void FileMonitor::update()//обновление информации о файлах
+void FileMonitor::update() // обновление информации о файлах
 {
-    for(int i = 0; i < objects.size(); i++)
+    for(int i = 0; i < objects.size(); i++) // проход по файлам в контейнер
     {
-        FileStatus temp = objects[i];
-        if (objects[i].update())
+        FileStatus temp = objects[i]; // временный файл для проверки
+        if (objects[i].update()) // если файл был обновлен
         {
-            if (temp.GetIsExisting() && !objects[i].GetIsExisting())
+            if (temp.GetIsExisting() && !objects[i].GetIsExisting()) // если файл был и его нет после обновления
             {
-                emit NotExist(objects[i].GetFilePath());
+                emit NotExist(objects[i].GetFilePath()); // испускаем сигнал о несуществовании
             }
-            else if (!temp.GetIsExisting() && objects[i].GetIsExisting())
+            else if (!temp.GetIsExisting() && objects[i].GetIsExisting()) // если файла не было и после обновления он есть
             {
-                emit Exist(objects[i].GetFilePath(), objects[i].GetSize());
+                emit Exist(objects[i].GetFilePath(), objects[i].GetSize()); // испускаем сигнал о существовании
             }
-            else
+            else // если изменился размер
             {
-                emit Resized(objects[i].GetFilePath(), objects[i].GetSize());
+                emit Resized(objects[i].GetFilePath(), objects[i].GetSize()); // испускаем сигнал о изменении размера
             }
         }
     }

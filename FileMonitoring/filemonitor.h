@@ -13,13 +13,11 @@ private:
 
     FileMonitor(){} // конструктор по умолчанию
     ~FileMonitor(){} // диструктор
-    // FileMonitor(FileMonitor const &);
-    // FileMonitor& operator=(FileMonitor const&);
 public:
     static FileMonitor& Instance() // статический метод
     {
-        static FileMonitor s;
-        return s;
+        static FileMonitor s; // статический объект
+        return s; // возвращаем ссылку
     }
     bool AddFile(QString path); // добавлениие файла в монитор
     bool DelFile(QString path); // удаление файла из монитора

@@ -12,6 +12,7 @@ class FileStatus // класс инфы о файле
 public:
     FileStatus(); // конструктор по умлочанию
     FileStatus(QString path); // конструктор с параметром
+    FileStatus(const FileStatus& other); // конструктор копирования
     bool operator==(const FileStatus& other) const; // оператор сравнения
     bool update(); // обновление информации о файле
 
@@ -19,7 +20,5 @@ public:
     QString GetFilePath(); // путь
     qint64 GetSize(); // размер
     bool GetIsExisting(); // факт существования
-public:
-    FileStatus(const FileStatus& other); // конструктор копирования
 };
 #endif // FILESTATUS_H

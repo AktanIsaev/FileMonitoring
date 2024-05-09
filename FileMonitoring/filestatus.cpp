@@ -32,14 +32,14 @@ bool FileStatus::GetIsExisting() // факт существования
 
 bool FileStatus::update() // обновление информации о файле
 {
-    QFileInfo temp = QFileInfo(FilePath); // инициализация временного файла
-    if(temp.exists() && !IsExisting) // если temp существует и его не было до
+    QFileInfo temp = QFileInfo(FilePath); // получаем инфу о файле
+    if(temp.exists() && !IsExisting) // если файл существует и его не было до
     {
         IsExisting = true;
         Size = temp.size();
         return true;
     }
-    else if(!temp.exists() && IsExisting) // если temp не существует и он был до
+    else if(!temp.exists() && IsExisting) // если файл не существует и он был до
     {
         IsExisting = false;
         Size = 0;

@@ -6,8 +6,8 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    FileMonitor& monitor = FileMonitor::Instance(); // монитор (единственный)
-    OutputDisplay display; // вывод
+    FileMonitor& monitor = FileMonitor::Instance(); // создаем объект мониторинга
+    OutputDisplay display; // создаем объект вывода
     // соединение сигналов монитора и слотов вывода
     QObject::connect(&monitor, &FileMonitor::Resized, &display, &OutputDisplay::displayResizedFile);
     QObject::connect(&monitor, &FileMonitor::Exist, &display, &OutputDisplay::displayExistingFile);
